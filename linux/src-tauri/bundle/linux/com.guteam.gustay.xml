@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="application/x-gustay">
+    <comment>GUStay theme</comment>
+    <comment xml:lang="ru">Тема оформления GUStay</comment>
+    <glob pattern="*.gustay"/>
+    <sub-class-of type="application/json"/>
+    <icon name="application-x-gustay"/>
+  </mime-type>
+</mime-info>

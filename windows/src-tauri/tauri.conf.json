@@ -1,0 +1,89 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "GUStay",
+  "version": "1.0.0",
+  "identifier": "com.guteam.gustay",
+  "build": {
+    "frontendDist": [
+      "../index.html"
+    ]
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "label": "main",
+        "title": "GUStay",
+        "width": 1280,
+        "height": 820,
+        "minWidth": 900,
+        "minHeight": 600,
+        "center": true,
+        "resizable": true,
+        "fullscreen": false
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; script-src 'self' 'unsafe-inline'; media-src 'self' data: blob:; connect-src ipc: http://ipc.localhost; object-src 'none'",
+      "dangerousDisableAssetCspModification": true
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": [
+      "msi",
+      "nsis"
+    ],
+    "icon": [
+      "icons/32x32.png",
+      "icons/64x64.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico",
+      "icons/icon.png"
+    ],
+    "fileAssociations": [
+      {
+        "ext": [
+          "gustay"
+        ],
+        "name": "GUStay Theme",
+        "description": "Тема оформления GUStay",
+        "mimeType": "application/x-gustay",
+        "role": "Editor",
+        "rank": "Owner",
+        "exportedType": {
+          "identifier": "com.guteam.gustay.theme",
+          "conformsTo": [
+            "public.json",
+            "public.data"
+          ]
+        },
+        "androidIntentActionFilters": [
+          "view"
+        ]
+      }
+    ],
+    "category": "Utility",
+    "shortDescription": "Не даёт экрану погаснуть",
+    "longDescription": "Утилита, не дающая экрану погаснуть, с темами оформления.",
+    "copyright": "© GUTeam",
+    "publisher": "GUTeam",
+    "homepage": "https://stay.guteam.net/",
+    "windows": {
+      "nsis": {
+        "installMode": "both",
+        "installerHooks": "bundle/windows/hooks.nsh",
+        "installerIcon": "icons/icon.ico",
+        "uninstallerIcon": "icons/icon.ico",
+        "languages": [
+          "Russian",
+          "English"
+        ],
+        "displayLanguageSelector": true
+      }
+    }
+  },
+  "plugins": {}
+}

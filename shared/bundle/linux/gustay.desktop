@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=GUStay
+GenericName=Keep Screen Awake
+Comment={{comment}}
+Exec={{exec}} %F
+Icon={{icon}}
+Terminal=false
+Categories={{categories}}
+StartupWMClass={{exec}}
+{{#if mime_type}}
+MimeType={{mime_type}};
+{{/if}}
