@@ -220,7 +220,7 @@ Tauri такой переход либо ничего не делал, либо 
 | Windows | `%APPDATA%\GUStay\settings.json` |
 | macOS | `~/Library/Application Support/GUStay/settings.json` |
 | Linux | `${XDG_CONFIG_HOME:-~/.config}/GUStay/settings.json` |
-| Android | `context.filesDir()/settings.json`, то есть `/data/data/com.guteam.gustay/files/settings.json` |
+| Android | `context.filesDir()/settings.json`, то есть `/data/data/net.guteam.gustay/files/settings.json` |
 
 `save_settings` проверяет, что переданный JSON является объектом, пишет во
 временный файл и делает `rename`, чтобы не оставить повреждённый файл при
@@ -251,7 +251,7 @@ Tauri такой переход либо ничего не делал, либо 
 - Windows: ассоциацию регистрирует установщик Tauri; NSIS-хук
   `SHChangeNotify(SHCNE_ASSOCCHANGED)` обновляет иконку и «Открыть с помощью»
   без перезапуска Explorer.
-- macOS: UTI `com.guteam.gustay.theme`, роль Editor; файлы приходят через
+- macOS: UTI `net.guteam.gustay.theme`, роль Editor; файлы приходят через
   `RunEvent::Opened`.
 - Android: `VIEW` intent-filter для `application/x-gustay` и
   `android:pathPattern=".*\\.gustay"`; файл приходит через

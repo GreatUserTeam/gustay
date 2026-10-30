@@ -26,7 +26,7 @@ PLATFORMS = ("android", "linux", "windows", "macos")
 
 PRODUCT_NAME = "GUStay"
 VERSION = "1.0.0"
-IDENTIFIER = "com.guteam.gustay"
+IDENTIFIER = "net.guteam.gustay"
 BINARY_NAME = "gustay"
 HOMEPAGE = "https://stay.guteam.net/"
 DESCRIPTION = "Утилита, не дающая экрану погаснуть, с темами оформления."
@@ -50,7 +50,7 @@ FILE_ASSOCIATION = {
     "role": "Editor",
     "rank": "Owner",
     "exportedType": {
-        "identifier": "com.guteam.gustay.theme",
+        "identifier": "net.guteam.gustay.theme",
         "conformsTo": ["public.json", "public.data"],
     },
     "androidIntentActionFilters": ["view"],
@@ -180,7 +180,7 @@ def base_config(platform: str) -> dict:
                 "depends": [],
                 "desktopTemplate": "bundle/linux/gustay.desktop",
                 "files": {
-                    "/usr/share/mime/packages/com.guteam.gustay.xml": "bundle/linux/com.guteam.gustay.xml"
+                    "/usr/share/mime/packages/net.guteam.gustay.xml": "bundle/linux/net.guteam.gustay.xml"
                 },
                 "postInstallScript": "bundle/linux/postinst.sh",
                 "postRemoveScript": "bundle/linux/postrm.sh",
@@ -308,7 +308,7 @@ def prepare_project(platform: str) -> Path:
     if platform == "linux":
         linux_bundle = tauri_dir / "bundle" / "linux"
         linux_bundle.mkdir(parents=True, exist_ok=True)
-        for name in ("gustay.desktop", "com.guteam.gustay.xml", "postinst.sh", "postrm.sh"):
+        for name in ("gustay.desktop", "net.guteam.gustay.xml", "postinst.sh", "postrm.sh"):
             shutil.copyfile(SHARED / "bundle" / "linux" / name, linux_bundle / name)
         for script in ("postinst.sh", "postrm.sh"):
             path = linux_bundle / script

@@ -196,19 +196,32 @@
     var opener = tauri && tauri.opener;
 
     if (opener && typeof opener.openUrl === 'function') {
-      return Promise.resolve(opener.openUrl(href)).catch(function (error) {
+      try {
+        var res = opener.openUrl(href);
+        if (res && typeof res.catch === 'function') {
+          res.catch(function (error) { logError('failed to open external link', error); });
+        }
+        return res || Promise.resolve();
+      } catch (error) {
         logError('failed to open external link', error);
-      });
+      }
     }
 
     if (tauri && tauri.core && typeof tauri.core.invoke === 'function') {
-      return tauri.core.invoke('open_external', { url: href }).catch(function (error) {
+      try {
+        return tauri.core.invoke('open_external', { url: href }).catch(function (error) {
+          logError('failed to open external link', error);
+        });
+      } catch (error) {
         logError('failed to open external link', error);
-      });
+      }
     }
 
-    // Development fallback when the page is opened in a normal browser.
-    window.open(href, '_blank', 'noopener,noreferrer');
+    // Try to force external browser in various environments
+    try { if (window.open(href, '_blank', 'noopener,noreferrer')) return Promise.resolve(); } catch(e){}
+    try { if (window.open(href)) return Promise.resolve(); } catch(e){}
+    // Last resort
+    try { location.href = href; } catch(e){}
     return Promise.resolve();
   }
 
@@ -221,18 +234,29 @@
           return;
         }
         var anchor = target.closest('a[href]');
-        var href = anchor && (anchor.getAttribute('href') || '');
+        if (!anchor) { return; }
+        var href = anchor.getAttribute('href') || anchor.href || '';
         if (!/^https?:\/\//i.test(href)) {
           return;
         }
 
-        // Keep the WebView on the current page. Tauri/WebView2/WebKit would
-        // otherwise create an in-app window or replace the application.
+        // Keep the WebView on the current page. Open in system browser.
         event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
         openExternalUrl(href);
+        return false;
       },
       true
     );
+    // Also handle auxclick/middle click
+    document.addEventListener('auxclick', function(event){
+      var target = event.target;
+      if (!target || typeof target.closest !== 'function') return;
+      var anchor = target.closest('a[href]'); if (!anchor) return;
+      var href = anchor.getAttribute('href') || anchor.href || '';
+      if (/^https?:\/\//i.test(href)) { event.preventDefault(); event.stopPropagation(); openExternalUrl(href); }
+    }, true);
   }
 
   /* ------------------------------------------------------------------ */
